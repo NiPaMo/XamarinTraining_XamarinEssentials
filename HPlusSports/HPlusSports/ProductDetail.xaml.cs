@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HPlusSports.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,9 +13,22 @@ namespace HPlusSports
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProductDetail : ContentPage
     {
-        public ProductDetail()
+        public ProductDetail(Services.Product target)
         {
             InitializeComponent();
+        }
+
+        public ProductDetail(ProductDetail target)
+        {
+            InitializeComponent();
+            BindingContext = target;
+        }
+
+        private void OrderBtn_Clicked(object sender, EventArgs e)
+        {
+            var target = BindingContext as Product;
+            Navigation.PushAsync(new OrderForm(
+                new Order { ProductName = target.Name, Quantity = 1 }));
         }
     }
 }
