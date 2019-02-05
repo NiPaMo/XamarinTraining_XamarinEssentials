@@ -24,8 +24,17 @@ namespace HPlusSports
         protected async override void OnAppearing()
         {
             base.OnAppearing();
-            var products = await ProductService.GetProductsAsync();
-            BindingContext = products;
+
+            INetworkManager mgr = DependencyService.Get<INetworkManager>();
+            if (mgr.IsNetworkConnected())
+            {
+                var products = await ProductService.GetProductsAsync();
+                BindingContext = products;
+            }
+            else
+            {
+                await DisplayAlert("Not connected", "You are not connected to a network", "Ok");
+            }
         }
     }
 }

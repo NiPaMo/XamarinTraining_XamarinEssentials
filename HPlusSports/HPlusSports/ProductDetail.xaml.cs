@@ -30,5 +30,12 @@ namespace HPlusSports
             Navigation.PushAsync(new OrderForm(
                 new Order { ProductName = target.Name, Quantity = 1 }));
         }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            var prod = BindingContext as Product;
+
+            ProductService.WishList.Add(prod);
+        }
     }
 }
